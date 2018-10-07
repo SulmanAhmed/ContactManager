@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Consumer } from "../../context";
-import Axios from "axios";
 import { Link } from "react-router-dom";
 
 export default class Contact extends Component {
@@ -15,73 +13,58 @@ export default class Contact extends Component {
   state = {
     showContactInfo: false
   };
-  onDeleteClick = async (id, dispatch) => {
-    try {
-      await Axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
-
-      dispatch({ type: "DELETE_CONTACT", payload: id });
-    } catch (e) {
-      dispatch({ type: "DELETE_CONTACT", payload: id });
-    }
-  };
+  onDeleteClick = async () => {};
 
   render() {
     const { showContactInfo } = this.state;
     const { name, phone, email, id } = this.props.contact;
 
     return (
-      <Consumer>
-        {value => {
-          const { dispatch } = value;
-          return (
-            <div className="card card-body">
-              <ul className="list-group">
-                <li className="list-group-item">
-                  Name:
-                  {name}
-                  <i
-                    onClick={() =>
-                      this.setState({
-                        showContactInfo: !this.state.showContactInfo
-                      })
-                    }
-                    className="fas fa-sort-down"
-                    style={{ cursor: "pointer" }}
-                  />
-                  <i
-                    className="fas fa-times"
-                    style={{ cursor: "pointer", float: "right", color: "red" }}
-                    onClick={this.onDeleteClick.bind(this, id, dispatch)}
-                  />
-                  <Link to={`/Editcontacts/${id}`}>
-                    <i
-                      className="fas fa-edit"
-                      style={{
-                        float: "right",
-                        cursor: "pointer",
-                        marginRight: "4px"
-                      }}
-                    />
-                  </Link>
-                </li>
+      <div className="card card-body">
+        <ul className="list-group">
+          <li className="list-group-item">
+            Name:
+            {name}
+            <i
+              onClick={() =>
+                this.setState({
+                  showContactInfo: !this.state.showContactInfo
+                })
+              }
+              className="fas fa-sort-down"
+              style={{ cursor: "pointer" }}
+            />
+            <i
+              className="fas fa-times"
+              style={{ cursor: "pointer", float: "right", color: "red" }}
+              onClick={this.onDeleteClick.bind(this, id)}
+            />
+            <Link to={`/Editcontacts/${id}`}>
+              <i
+                className="fas fa-edit"
+                style={{
+                  float: "right",
+                  cursor: "pointer",
+                  marginRight: "4px"
+                }}
+              />
+            </Link>
+          </li>
 
-                {showContactInfo ? (
-                  <div>
-                    <li className="list-group-item">
-                      Email:
-                      {email}
-                    </li>
-                    <li className="list-group-item">
-                      Phone:
-                      {phone}
-                    </li>
-                  </div>
-                ) : null}
-              </ul>
+          {showContactInfo ? (
+            <div>
+              <li className="list-group-item">
+                Email:
+                {email}
+              </li>
+              <li className="list-group-item">
+                Phone:
+                {phone}
+              </li>
             </div>
-          );
-        }}
-      </Consumer>
+          ) : null}
+        </ul>
+      </div>
     );
   }
 }

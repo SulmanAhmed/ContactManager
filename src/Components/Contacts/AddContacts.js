@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Consumer } from "../../context";
 import DefaultValue from "../Layout/InputProps";
 import Axios from "axios";
 
@@ -42,7 +41,6 @@ export default class AddContacts extends Component {
       "https://jsonplaceholder.typicode.com/users/",
       newContact
     );
-    dispatch({ type: "ADD_CONTACT", payload: res.data });
 
     this.setState({
       name: "",
@@ -56,57 +54,51 @@ export default class AddContacts extends Component {
   };
   render() {
     const { name, email, phone, error } = this.state;
+
     return (
-      <Consumer>
-        {value => {
-          const { dispatch } = value;
-          return (
-            <div className="card mb-4">
-              <div className="card-header bg-danger text-light card-body ">
-                Add Contact
-              </div>
-              <div className="card-body">
-                <form onSubmit={this.OnFormSubmit.bind(this, dispatch)}>
-                  <DefaultValue
-                    lable="Name"
-                    value={name}
-                    placeholder="Enter Name"
-                    onChange={this.onChange}
-                    name="name"
-                    error={error.name}
-                  />
+      <div className="card mb-4">
+        <div className="card-header bg-danger text-light card-body ">
+          Add Contact
+        </div>
+        <div className="card-body">
+          <form onSubmit={this.OnFormSubmit.bind(this)}>
+            <DefaultValue
+              lable="Name"
+              value={name}
+              placeholder="Enter Name"
+              onChange={this.onChange}
+              name="name"
+              error={error.name}
+            />
 
-                  <DefaultValue
-                    lable="Email"
-                    value={email}
-                    placeholder="Enter Email"
-                    onChange={this.onChange}
-                    name="email"
-                    type="email"
-                    error={error.email}
-                  />
+            <DefaultValue
+              lable="Email"
+              value={email}
+              placeholder="Enter Email"
+              onChange={this.onChange}
+              name="email"
+              type="email"
+              error={error.email}
+            />
 
-                  <DefaultValue
-                    lable="Phone"
-                    value={phone}
-                    placeholder="Enter Phone"
-                    onChange={this.onChange}
-                    name="phone"
-                    error={error.phone}
-                  />
+            <DefaultValue
+              lable="Phone"
+              value={phone}
+              placeholder="Enter Phone"
+              onChange={this.onChange}
+              name="phone"
+              error={error.phone}
+            />
 
-                  <button
-                    type="Submit"
-                    className="btn btn-block  mt-3 bg-danger text-light"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
-          );
-        }}
-      </Consumer>
+            <button
+              type="Submit"
+              className="btn btn-block  mt-3 bg-danger text-light"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     );
   }
 }

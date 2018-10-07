@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Contacts from "./Components/Contacts/Contacts";
 import HeaderText from "./Components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Provider } from "./context";
 import About from "./Components/Pages/About";
 import "./App.css";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
@@ -16,24 +15,22 @@ export default class App extends Component {
     return (
       <div className="container">
         <div>
-          <Provider>
-            <Router>
-              <React.Fragment>
-                <HeaderText BrandName="Welcome to Contect Manager" />
-                <Switch>
-                  <Route exact path="/" component={Contacts} />
-                  <Route exact path="/add/contact" component={AddContacts} />
-                  <Route exact path="/about" component={About} />
-                  <Route
-                    exact
-                    path={`/Editcontacts/:id`}
-                    component={EditContacts}
-                  />
-                  <Route component={NotFound} />
-                </Switch>
-              </React.Fragment>
-            </Router>
-          </Provider>
+          <Router>
+            <React.Fragment>
+              <HeaderText BrandName="Welcome to Contect Manager" />
+              <Switch>
+                <Route exact path="/" component={Contacts} />
+                <Route exact path="/add/contact" component={AddContacts} />
+                <Route exact path="/about" component={About} />
+                <Route
+                  exact
+                  path={`/Editcontacts/:id`}
+                  component={EditContacts}
+                />
+                <Route component={NotFound} />
+              </Switch>
+            </React.Fragment>
+          </Router>
         </div>
       </div>
     );
